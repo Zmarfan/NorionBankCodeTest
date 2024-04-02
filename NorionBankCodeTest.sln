@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorionBankCodeTest", "NorionBankCodeTest\NorionBankCodeTest.csproj", "{2B131FAD-EE0E-45CA-9483-4817DF68F2A5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorionBankCodeTestTests", "NorionBankCodeTestTests\NorionBankCodeTestTests.csproj", "{1F2AD26B-9D71-4E19-9C8E-D3C49B8DBB7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{2B131FAD-EE0E-45CA-9483-4817DF68F2A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B131FAD-EE0E-45CA-9483-4817DF68F2A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B131FAD-EE0E-45CA-9483-4817DF68F2A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F2AD26B-9D71-4E19-9C8E-D3C49B8DBB7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F2AD26B-9D71-4E19-9C8E-D3C49B8DBB7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F2AD26B-9D71-4E19-9C8E-D3C49B8DBB7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F2AD26B-9D71-4E19-9C8E-D3C49B8DBB7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
