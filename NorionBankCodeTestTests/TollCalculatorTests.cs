@@ -30,4 +30,20 @@ public class TollCalculatorTests {
         int tollFee = TollCalculator.GetTollFee(PAY_DAY, new Car());
         Assert.That(tollFee, Is.Not.Zero);
     }
+    
+    [TestCase("2024-04-03 00:00", 0)]
+    [TestCase("2024-04-03 06:23", 8)]
+    [TestCase("2024-04-03 06:45", 13)]
+    [TestCase("2024-04-03 07:45", 18)]
+    [TestCase("2024-04-03 08:25", 13)]
+    [TestCase("2024-04-03 12:00", 8)]
+    [TestCase("2024-04-03 15:25", 13)]
+    [TestCase("2024-04-03 16:25", 18)]
+    [TestCase("2024-04-03 17:25", 13)]
+    [TestCase("2024-04-03 18:25", 8)]
+    [TestCase("2024-04-03 18:45", 0)]
+    public void should_return_the_expected_toll_fee_provided_specific_time(string dateTimeString, int expectedTollFee) {
+        int tollFee = TollCalculator.GetTollFee(DateTime.Parse(dateTimeString), new Car());
+        Assert.That(tollFee, Is.EqualTo(expectedTollFee));
+    }
 }

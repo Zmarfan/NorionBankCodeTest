@@ -13,6 +13,18 @@ public class TollCalculator {
         VehicleType.MILITARY
     };
 
+    private static readonly List<PaymentTimeRange> PAYMENT_TIME_RANGES = new() {
+        new PaymentTimeRange(8, new TimeSpan(6, 0, 0), new TimeSpan(6, 29, 0)),
+        new PaymentTimeRange(13, new TimeSpan(6, 30, 0), new TimeSpan(6, 59, 0)),
+        new PaymentTimeRange(18, new TimeSpan(7, 00, 0), new TimeSpan(7, 59, 0)),
+        new PaymentTimeRange(13, new TimeSpan(8, 00, 0), new TimeSpan(8, 29, 0)),
+        new PaymentTimeRange(8, new TimeSpan(8, 30, 0), new TimeSpan(14, 59, 0)),
+        new PaymentTimeRange(13, new TimeSpan(15, 00, 0), new TimeSpan(15, 29, 0)),
+        new PaymentTimeRange(18, new TimeSpan(15, 30, 0), new TimeSpan(16, 59, 0)),
+        new PaymentTimeRange(13, new TimeSpan(17, 00, 0), new TimeSpan(17, 59, 0)),
+        new PaymentTimeRange(8, new TimeSpan(18, 00, 0), new TimeSpan(18, 29, 0))
+    };
+
     private static readonly SwedenPublicHoliday SWEDEN_PUBLIC_HOLIDAY = new();
 
     /**
@@ -55,19 +67,7 @@ public class TollCalculator {
             return 0;
         }
 
-        int hour = date.Hour;
-        int minute = date.Minute;
-
-        if (hour == 6 && minute >= 0 && minute <= 29) return 8;
-        else if (hour == 6 && minute >= 30 && minute <= 59) return 13;
-        else if (hour == 7 && minute >= 0 && minute <= 59) return 18;
-        else if (hour == 8 && minute >= 0 && minute <= 29) return 13;
-        else if (hour >= 8 && hour <= 14 && minute >= 30 && minute <= 59) return 8;
-        else if (hour == 15 && minute >= 0 && minute <= 29) return 13;
-        else if (hour == 15 && minute >= 0 || hour == 16 && minute <= 59) return 18;
-        else if (hour == 17 && minute >= 0 && minute <= 59) return 13;
-        else if (hour == 18 && minute >= 0 && minute <= 29) return 8;
-        else return 0;
+        return PAYMENT_TIME_RANGES.FirstOrDefault(paymentTimeRange => paymentTimeRange.IsWithinRange(date.TimeOfDay))?.paymentAmount ?? 0;
     }
 
     private static bool IsTollFreeDate(DateTime dateTime) {

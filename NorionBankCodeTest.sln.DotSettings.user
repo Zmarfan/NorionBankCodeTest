@@ -3,4 +3,7 @@
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::1F2AD26B-9D71-4E19-9C8E-D3C49B8DBB7B::net7.0::NorionBankCodeTestTests.TollCalculatorTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9cd17cef_002D00d0_002D4aeb_002D8028_002D11c6d5ae6e74/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="should_return_the_expected_toll_fee_provided_specific_time" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Project Location="C:\Users\Filip Petersson\Documents\Github\NorionBankCodeTest\NorionBankCodeTestTests" Presentation="&amp;lt;NorionBankCodeTestTests&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
