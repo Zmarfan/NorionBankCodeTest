@@ -27,14 +27,6 @@ public static class TollCalculator {
 
     private static readonly SwedenPublicHoliday SWEDEN_PUBLIC_HOLIDAY = new();
 
-    /**
-     * Calculate the total toll fee for one day
-     *
-     * @param vehicle - the vehicle
-     * @param dates   - date and time of all passes on one day
-     * @return - the total toll fee for that day
-     */
-
     public static int GetTollFee(IVehicle vehicle, IEnumerable<DateTime> dateTimes) {
         List<DateTime> orderedDateTimes = dateTimes.Order().ToList();
         
