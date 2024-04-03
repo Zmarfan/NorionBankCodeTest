@@ -15,6 +15,79 @@ public class TollCalculatorTests {
     private static readonly IVehicle TOLL_FREE_VEHICLE = new Motorbike();
     private static readonly IVehicle TOLL_VEHICLE = new Car();
     
+    [Test]
+    public void should_return_the_highest_toll_fee_if_all_times_are_within_one_hour() {
+        int tollFee = TollCalculator.GetTollFee(TOLL_VEHICLE, new List<DateTime> {
+            DateTime.Parse("2024-04-03 07:45"),
+            DateTime.Parse("2024-04-03 07:55"),
+            DateTime.Parse("2024-04-03 08:15"),
+            DateTime.Parse("2024-04-03 08:44"),
+        });
+        Assert.That(tollFee, Is.EqualTo(18));
+    }
+    
+    [Test]
+    public void should_return_the_sum_of_toll_fees_that_are_separated_by_more_1_or_more_hour_but_is_grouped_within_1_hour_segments() {
+        int tollFee = TollCalculator.GetTollFee(TOLL_VEHICLE, new List<DateTime> {
+            DateTime.Parse("2024-04-03 03:45"),
+            DateTime.Parse("2024-04-03 04:40"),
+            DateTime.Parse("2024-04-03 07:45"),
+            DateTime.Parse("2024-04-03 08:25"),
+            DateTime.Parse("2024-04-03 08:44"),
+            DateTime.Parse("2024-04-03 10:45"),
+            DateTime.Parse("2024-04-03 10:55"),
+            DateTime.Parse("2024-04-03 11:44"),
+            DateTime.Parse("2024-04-03 17:15"),
+            DateTime.Parse("2024-04-03 18:14"),
+            DateTime.Parse("2024-04-03 22:00"),
+            DateTime.Parse("2024-04-03 22:35"),
+        });
+        Assert.That(tollFee, Is.EqualTo(39));
+    }
+    
+    [Test]
+    public void should_return_the_sum_of_toll_fees_that_span_more_than_one_hour() {
+        int tollFee = TollCalculator.GetTollFee(TOLL_VEHICLE, new List<DateTime> {
+            DateTime.Parse("2024-04-03 07:45"),
+            DateTime.Parse("2024-04-03 08:45"),
+            DateTime.Parse("2024-04-03 09:45"),
+            DateTime.Parse("2024-04-03 11:00"),
+        });
+        Assert.That(tollFee, Is.EqualTo(42));
+    }
+    
+    [Test]
+    public void should_return_the_correct_toll_fee_even_if_date_times_are_out_of_order() {
+        int tollFee = TollCalculator.GetTollFee(TOLL_VEHICLE, new List<DateTime> {
+            DateTime.Parse("2024-04-03 03:45"),
+            DateTime.Parse("2024-04-03 08:25"),
+            DateTime.Parse("2024-04-03 22:35"),
+            DateTime.Parse("2024-04-03 08:44"),
+            DateTime.Parse("2024-04-03 17:15"),
+            DateTime.Parse("2024-04-03 07:45"),
+            DateTime.Parse("2024-04-03 10:45"),
+            DateTime.Parse("2024-04-03 10:55"),
+            DateTime.Parse("2024-04-03 22:00"),
+            DateTime.Parse("2024-04-03 11:44"),
+            DateTime.Parse("2024-04-03 04:40"),
+            DateTime.Parse("2024-04-03 18:14"),
+        });
+        Assert.That(tollFee, Is.EqualTo(39));
+    }
+    
+    [Test]
+    public void should_return_correct_toll_fee_even_if_times_overlap_but_are_different_days() {
+        int tollFee = TollCalculator.GetTollFee(TOLL_VEHICLE, new List<DateTime> {
+            DateTime.Parse("2024-04-03 07:45"),
+            DateTime.Parse("2024-04-03 08:25"),
+            DateTime.Parse("2024-04-03 08:44"),
+            DateTime.Parse("2024-04-04 07:45"),
+            DateTime.Parse("2024-04-04 08:25"),
+            DateTime.Parse("2024-04-04 08:44"),
+        });
+        Assert.That(tollFee, Is.EqualTo(36));
+    }
+    
     [TestCaseSource(nameof(TOLL_FREE_DAYS))]
     public void should_return_a_toll_fee_of_zero_if_provided_date_is_a_toll_free_day(DateTime dateTime) {
         int tollFee = TollCalculator.GetTollFee(TOLL_VEHICLE, dateTime);
