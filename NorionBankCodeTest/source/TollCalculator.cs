@@ -50,7 +50,7 @@ public class TollCalculator {
         return totalFee;
     }
 
-    public int GetTollFee(DateTime date, IVehicle vehicle) {
+    public static int GetTollFee(DateTime date, IVehicle vehicle) {
         if (TOLL_FREE_VEHICLE_TYPES.Contains(vehicle.Type) || IsTollFreeDate(date)) {
             return 0;
         }
