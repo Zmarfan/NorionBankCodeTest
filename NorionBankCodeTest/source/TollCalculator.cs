@@ -3,6 +3,7 @@ using TollFeeCalculator;
 
 public static class TollCalculator {
     public static readonly int MAX_TOLL_FEE = 60;
+    private static readonly int COMBINE_TOLL_FEE_WINDOW_IN_MINUTES = 60;
     private const int JULY = 6;
 
     private static readonly HashSet<VehicleType> TOLL_FREE_VEHICLE_TYPES = new() {
@@ -44,17 +45,17 @@ public static class TollCalculator {
     }
 
     private static int CalculateTollFeeOneDay(IVehicle vehicle, List<DateTime> dateTimes) {
-        DateTime hourDateTimeStart = dateTimes.First();
+        DateTime referenceDateTime = dateTimes.First();
         int totalTollFee = 0;
         int highestHourTollFee = 0;
         foreach (DateTime dateTime in dateTimes) {
             int tollFee = GetTollFee(vehicle, dateTime);
-            TimeSpan timeSpan = dateTime - hourDateTimeStart;
-            if (timeSpan.TotalHours < 1) {
+            TimeSpan timeSpan = dateTime - referenceDateTime;
+            if (timeSpan.TotalMinutes < COMBINE_TOLL_FEE_WINDOW_IN_MINUTES) {
                 highestHourTollFee = Math.Max(highestHourTollFee, tollFee);
             }
             else {
-                hourDateTimeStart = dateTime;
+                referenceDateTime = dateTime;
                 totalTollFee += highestHourTollFee;
                 highestHourTollFee = tollFee;
             }
