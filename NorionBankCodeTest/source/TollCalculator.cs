@@ -41,7 +41,7 @@ public static class TollCalculator {
             .Sum(group => CalculateTollFeeOneDay(group.ToList()));
     }
 
-    public static int GetTollFee(DateTime date) {
+    private static int GetTollFee(DateTime date) {
         return PAYMENT_TIME_RANGES.FirstOrDefault(paymentTimeRange => paymentTimeRange.IsWithinRange(date.TimeOfDay))?.paymentAmount ?? 0;
     }
 
