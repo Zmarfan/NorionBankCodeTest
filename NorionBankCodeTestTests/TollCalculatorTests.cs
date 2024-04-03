@@ -12,22 +12,24 @@ public class TollCalculatorTests {
     private static readonly DateTime DAY_IN_JULY = DateTime.Parse("2024-06-24 12:00");
     
     private static readonly object[] TOLL_FREE_DAYS = { SATURDAY, SUNDAY, CHRISTMAS_DAY,CHRISTMAS_EVE,DAY_IN_JULY };
+    private static readonly IVehicle TOLL_FREE_VEHICLE = new Motorbike();
+    private static readonly IVehicle TOLL_VEHICLE = new Car();
     
     [TestCaseSource(nameof(TOLL_FREE_DAYS))]
     public void should_return_a_toll_fee_of_zero_if_provided_date_is_a_toll_free_day(DateTime dateTime) {
-        int tollFee = TollCalculator.GetTollFee(dateTime, new Car());
+        int tollFee = TollCalculator.GetTollFee(dateTime, TOLL_VEHICLE);
         Assert.That(tollFee, Is.Zero);
     }
     
     [Test]
     public void should_return_a_toll_fee_of_zero_if_provided_vehicle_type_is_marked_as_toll_free() {
-        int tollFee = TollCalculator.GetTollFee(PAY_DAY, new Motorbike());
+        int tollFee = TollCalculator.GetTollFee(PAY_DAY, TOLL_FREE_VEHICLE);
         Assert.That(tollFee, Is.Zero);
     }
     
     [Test]
     public void should_return_a_toll_fee_of_zero_if_provided_vehicle_type_is_not_marked_as_toll_free() {
-        int tollFee = TollCalculator.GetTollFee(PAY_DAY, new Car());
+        int tollFee = TollCalculator.GetTollFee(PAY_DAY, TOLL_VEHICLE);
         Assert.That(tollFee, Is.Not.Zero);
     }
     
@@ -43,7 +45,7 @@ public class TollCalculatorTests {
     [TestCase("2024-04-03 18:25", 8)]
     [TestCase("2024-04-03 18:45", 0)]
     public void should_return_the_expected_toll_fee_provided_specific_time(string dateTimeString, int expectedTollFee) {
-        int tollFee = TollCalculator.GetTollFee(DateTime.Parse(dateTimeString), new Car());
+        int tollFee = TollCalculator.GetTollFee(DateTime.Parse(dateTimeString), TOLL_VEHICLE);
         Assert.That(tollFee, Is.EqualTo(expectedTollFee));
     }
 }
