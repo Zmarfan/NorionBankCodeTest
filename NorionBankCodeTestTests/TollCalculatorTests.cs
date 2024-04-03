@@ -9,7 +9,7 @@ public class TollCalculatorTests {
     private static readonly DateTime SUNDAY = DateTime.Parse("2024-04-07 12:00");
     private static readonly DateTime CHRISTMAS_DAY = DateTime.Parse("2024-12-25 12:00");
     private static readonly DateTime CHRISTMAS_EVE = DateTime.Parse("2024-12-24 12:00");
-    private static readonly DateTime DAY_IN_JULY = DateTime.Parse("2024-06-24 12:00");
+    private static readonly DateTime DAY_IN_JULY = DateTime.Parse("2024-07-24 12:00");
     
     private static readonly object[] TOLL_FREE_DAYS = { SATURDAY, SUNDAY, CHRISTMAS_DAY,CHRISTMAS_EVE,DAY_IN_JULY };
     private static readonly IVehicle TOLL_FREE_VEHICLE = new Motorbike();

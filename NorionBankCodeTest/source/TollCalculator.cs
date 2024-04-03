@@ -4,7 +4,7 @@ using TollFeeCalculator;
 public static class TollCalculator {
     public static readonly int MAX_TOLL_FEE = 60;
     private static readonly int COMBINE_TOLL_FEE_WINDOW_IN_MINUTES = 60;
-    private const int JULY = 6;
+    private const int JULY = 7;
 
     private static readonly HashSet<VehicleType> TOLL_FREE_VEHICLE_TYPES = new() {
         VehicleType.MOTORBIKE,
