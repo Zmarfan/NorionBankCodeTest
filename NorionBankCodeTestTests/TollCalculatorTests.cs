@@ -88,6 +88,44 @@ public class TollCalculatorTests {
         Assert.That(tollFee, Is.EqualTo(36));
     }
     
+    [Test]
+    public void should_return_max_toll_fee_if_combined_each_toll_exceeds_max_fee_one_day() {
+        int tollFee = TollCalculator.GetTollFee(TOLL_VEHICLE, new List<DateTime> {
+            DateTime.Parse("2024-04-03 07:45"),
+            DateTime.Parse("2024-04-03 08:46"),
+            DateTime.Parse("2024-04-03 09:47"),
+            DateTime.Parse("2024-04-03 10:48"),
+            DateTime.Parse("2024-04-03 11:49"),
+            DateTime.Parse("2024-04-03 12:50"),
+            DateTime.Parse("2024-04-03 13:51"),
+
+        });
+        Assert.That(tollFee, Is.EqualTo(TollCalculator.MAX_TOLL_FEE));
+    }
+    
+    [Test]
+    public void should_return_sum_of_max_toll_fee_if_combined_each_toll_exceeds_max_fee_over_multiple_days() {
+        int tollFee = TollCalculator.GetTollFee(TOLL_VEHICLE, new List<DateTime> {
+            DateTime.Parse("2024-04-03 07:45"),
+            DateTime.Parse("2024-04-03 08:46"),
+            DateTime.Parse("2024-04-03 09:47"),
+            DateTime.Parse("2024-04-03 10:48"),
+            DateTime.Parse("2024-04-03 11:49"),
+            DateTime.Parse("2024-04-03 12:50"),
+            DateTime.Parse("2024-04-03 13:51"),
+            
+            DateTime.Parse("2024-04-04 07:45"),
+            DateTime.Parse("2024-04-04 08:46"),
+            DateTime.Parse("2024-04-04 09:47"),
+            DateTime.Parse("2024-04-04 10:48"),
+            DateTime.Parse("2024-04-04 11:49"),
+            DateTime.Parse("2024-04-04 12:50"),
+            DateTime.Parse("2024-04-04 13:51"),
+
+        });
+        Assert.That(tollFee, Is.EqualTo(TollCalculator.MAX_TOLL_FEE * 2));
+    }
+    
     [TestCaseSource(nameof(TOLL_FREE_DAYS))]
     public void should_return_a_toll_fee_of_zero_if_provided_date_is_a_toll_free_day(DateTime dateTime) {
         int tollFee = TollCalculator.GetTollFee(TOLL_VEHICLE, dateTime);
