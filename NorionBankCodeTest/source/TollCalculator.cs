@@ -30,26 +30,27 @@ public static class TollCalculator {
     private static readonly SwedenPublicHoliday SWEDEN_PUBLIC_HOLIDAY = new();
 
     public static int GetTollFee(IVehicle vehicle, IEnumerable<DateTime> dateTimes) {
+        if (TOLL_FREE_VEHICLE_TYPES.Contains(vehicle.Type)) {
+            return 0;
+        }
+        
         return dateTimes
             .Order()
             .GroupBy(dateTime => dateTime.Date)
-            .Sum(group => CalculateTollFeeOneDay(vehicle, group.ToList()));
+            .Where(group => !IsTollFreeDate(group.Key))
+            .Sum(group => CalculateTollFeeOneDay(group.ToList()));
     }
 
-    public static int GetTollFee(IVehicle vehicle, DateTime date) {
-        if (TOLL_FREE_VEHICLE_TYPES.Contains(vehicle.Type) || IsTollFreeDate(date)) {
-            return 0;
-        }
-
+    public static int GetTollFee(DateTime date) {
         return PAYMENT_TIME_RANGES.FirstOrDefault(paymentTimeRange => paymentTimeRange.IsWithinRange(date.TimeOfDay))?.paymentAmount ?? 0;
     }
 
-    private static int CalculateTollFeeOneDay(IVehicle vehicle, List<DateTime> dateTimes) {
+    private static int CalculateTollFeeOneDay(List<DateTime> dateTimes) {
         DateTime referenceDateTime = dateTimes.First();
         int totalTollFee = 0;
         int highestHourTollFee = 0;
         foreach (DateTime dateTime in dateTimes) {
-            int tollFee = GetTollFee(vehicle, dateTime);
+            int tollFee = GetTollFee(dateTime);
             TimeSpan timeSpan = dateTime - referenceDateTime;
             if (timeSpan.TotalMinutes < COMBINE_TOLL_FEE_WINDOW_IN_MINUTES) {
                 highestHourTollFee = Math.Max(highestHourTollFee, tollFee);
