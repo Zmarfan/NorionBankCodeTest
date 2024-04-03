@@ -1,7 +1,7 @@
 ﻿using PublicHoliday;
 using TollFeeCalculator;
 
-public class TollCalculator {
+public static class TollCalculator {
     private const int JULY = 6;
 
     private static readonly HashSet<VehicleType> TOLL_FREE_VEHICLE_TYPES = new() {
@@ -35,7 +35,7 @@ public class TollCalculator {
      * @return - the total toll fee for that day
      */
 
-    public int GetTollFee(IVehicle vehicle, DateTime[] dates)
+    public static int GetTollFee(IVehicle vehicle, DateTime[] dates)
     {
         DateTime intervalStart = dates[0];
         int totalFee = 0;
